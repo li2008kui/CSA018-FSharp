@@ -1,5 +1,6 @@
 ﻿namespace ThisCoder.CSA018
 open System
+open System.Collections.Generic
 open System.Security.Cryptography
 open System.Text
 open MessageId
@@ -9,7 +10,7 @@ open StringHelper
 open DESHelper
 
 module MessageBody =
-    type MessageBody(messageId: MessageId, gatewayId: uint32, luminaireId: uint32, parameterList: Parameter list, ?desKey: byte[]) =
+    type MessageBody(messageId: MessageId, gatewayId: uint32, luminaireId: uint32, parameterList: List<Parameter>, ?desKey: byte[]) =
         let mutable _messageId = messageId
         let mutable _gatewayId = gatewayId
         let mutable _luminaireId = luminaireId
@@ -23,9 +24,10 @@ module MessageBody =
             mb.ErrorCode <- errorCode
             if errorInfo.IsSome then  mb.ErrorInfo <- errorInfo.Value
             if desKey.IsSome then
-                MessageBody(messageId, gatewayId, luminaireId, [], desKey.Value)
+                MessageBody(messageId, gatewayId, luminaireId, null, desKey.Value)
             else
-                MessageBody(messageId, gatewayId, luminaireId, [], null)
+                MessageBody(messageId, gatewayId, luminaireId, null, null)
+        new () as b = MessageBody(b.MessageId, b.GatewayId, b.LuminaireId, null, null)
         member this.MessageId
             with get() = _messageId
             and set mi = _messageId <- mi
@@ -55,7 +57,7 @@ module MessageBody =
             for i in [24..8..0] do
                 mb <- mb @ [byte (this.LuminaireId >>> i)]
 
-            if this.ParameterList.Length > 0 then
+            if this.ParameterList.Count > 0 then
                 for pmt in this.ParameterList do
                     mb <- mb @ Array.toList (pmt.GetParameter())
             else

@@ -15,6 +15,8 @@ module MessageHead =
             MessageHead(type', seqNumber, 0us, 0ul)
         new (type': MessageType) =
             MessageHead(type', 0ul, 0us, 0ul)
+        new () as h =
+            MessageHead(h.Type, 0ul, 0us, 0ul)
         member this.Type
             with get() = _type
             and set t = _type <- t

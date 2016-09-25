@@ -44,12 +44,15 @@
     <Compile Include="MessageType.fs" />
     <Compile Include="MessageHead.fs" />
     <Compile Include="ParameterType.fs" />
+    <Compile Include="ErrorCode.fs" />
+    <Compile Include="CsaException.fs" />
     <Compile Include="Parameter.fs" />
     <Compile Include="MessageId.fs" />
-    <Compile Include="ErrorCode.fs" />
     <Compile Include="StringHelper.fs" />
     <Compile Include="DESHelper.fs" />
     <Compile Include="MessageBody.fs" />
+    <Compile Include="BytesHelper.fs" />
+    <Compile Include="Crc32.fs" />
     <Compile Include="Datagram.fs" />
   </ItemGroup>
   <Import Project="$(FSharpTargetsPath)" />
